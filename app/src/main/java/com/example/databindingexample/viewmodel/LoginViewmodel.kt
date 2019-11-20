@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.databindingexample.models.UserDetails
 import com.example.databindingexample.roomdatabase.dao.UserDAO
 import com.example.databindingexample.roomdatabase.dao.database.AppDatabase
@@ -51,7 +50,7 @@ class LoginViewmodel : AndroidViewModel {
         return loginDetails
     }
 
-    fun getAllUsers(): LiveData<List<UserDetails>>? {
-        return userDAO?.getUsers()
+    fun getAllUsers(username: String): LiveData<List<UserDetails>>? {
+        return userDAO?.getUsers(username)
     }
 }

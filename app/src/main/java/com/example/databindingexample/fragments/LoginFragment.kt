@@ -1,7 +1,6 @@
 package com.example.databindingexample.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +27,6 @@ class LoginFragment : Fragment() {
             ViewModelProviders.of(this)[LoginViewmodel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-        viewmodel?.getAllUsers()?.observe(this, Observer {
-            userList = it
-        })
-
         return view
     }
 
@@ -39,17 +34,18 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_submit.setOnClickListener {
-            for (name in this.userList!!) {
-                if (name.username.equals(edt_username.text.toString())) {
-                    if (name.password.equals(edt_password.text.toString())) {
+            viewmodel?.getAllUsers(edt_username.text.toString())?.observe(this, Observer {
+                userList = it
+                if (it.get(0).username.equals(edt_username.text.toString())) {
+                    if (it.get(0).password.equals(edt_password.text.toString())) {
                         Toast.makeText(requireActivity(), "Login Success", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(requireActivity(), "Password incorrect", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "Password not found", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(requireActivity(), "Username not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), "User not found", Toast.LENGTH_SHORT).show()
                 }
-            }
+            })
         }
     }
 }
