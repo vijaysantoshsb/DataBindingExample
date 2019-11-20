@@ -39,7 +39,6 @@ class LoginViewmodel : AndroidViewModel {
     fun setLoginDetails() {
         loginDetails.value =
             UserDetails(
-                uid = 1,
                 username = userName.value!!,
                 password = password.value!!,
                 mobile = mobileNumber.value!!
