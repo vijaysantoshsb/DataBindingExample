@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.register_fragment.btn_submit
 
 class LoginFragment : Fragment() {
 
-    private var viewmodel = LoginViewmodel()
+    private var viewmodel: LoginViewmodel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -30,11 +30,11 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewmodel.getLoginDetail().observe(this, Observer {
+        viewmodel?.getLoginDetail()?.observe(this, Observer {
             Log.i("LoginFragment", it.username)
         })
-        /*btn_submit.setOnClickListener {
-
-        }*/
+        viewmodel?.getAllUsers()?.observe(this, Observer {
+            Log.i("userdata", it[0].username)
+        })
     }
 }

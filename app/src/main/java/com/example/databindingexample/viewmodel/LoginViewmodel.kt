@@ -1,17 +1,28 @@
 package com.example.databindingexample.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.databindingexample.models.UserDetails
+import com.example.databindingexample.roomdatabase.dao.UserDAO
+import com.example.databindingexample.roomdatabase.dao.database.AppDatabase
 
-class LoginViewmodel : ViewModel() {
+class LoginViewmodel : AndroidViewModel {
+    constructor(application: Application) : super(application)
 
     private var userName = MutableLiveData<String>()
     private var password = MutableLiveData<String>()
     private var mobileNumber = MutableLiveData<String>()
 
     private var loginDetails = MutableLiveData<UserDetails>()
+    private var appDatabase = AppDatabase
+    private var userDAO: UserDAO? = null
 
+    init {
+        userDAO = appDatabase.getDatabase(getApplication()).userDao()
+    }
 
     fun getUserName(): MutableLiveData<String> {
         return userName
@@ -27,11 +38,21 @@ class LoginViewmodel : ViewModel() {
 
     fun setLoginDetails() {
         loginDetails.value =
-            UserDetails(username = userName.value!!, password = password.value!!, mobile = mobileNumber.value!!)
+            UserDetails(
+                uid = 1,
+                username = userName.value!!,
+                password = password.value!!,
+                mobile = mobileNumber.value!!
+            )
+        userDAO?.insertUser(loginDetails.value!!)
+
     }
 
     fun getLoginDetail(): MutableLiveData<UserDetails> {
         return loginDetails
     }
 
+    fun getAllUsers(): LiveData<List<UserDetails>>? {
+        return userDAO?.getUsers()
+    }
 }

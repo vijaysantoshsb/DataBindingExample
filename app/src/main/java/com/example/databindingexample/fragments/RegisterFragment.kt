@@ -9,14 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.room.Room
 import com.example.databindingexample.R
 import com.example.databindingexample.databinding.RegisterFragmentBinding
+import com.example.databindingexample.roomdatabase.dao.database.AppDatabase
 import com.example.databindingexample.viewmodel.LoginViewmodel
 import kotlinx.android.synthetic.main.register_fragment.*
 
 class RegisterFragment : Fragment() {
 
-    var viewmodel = LoginViewmodel()
+    var viewmodel: LoginViewmodel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         viewmodel = activity?.run {
@@ -34,7 +36,7 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_submit.setOnClickListener {
-            viewmodel.setLoginDetails()
+            viewmodel?.setLoginDetails()
             Navigation.findNavController(it).navigate(R.id.action_registerFragment_to_loginFragment)
         }
     }
