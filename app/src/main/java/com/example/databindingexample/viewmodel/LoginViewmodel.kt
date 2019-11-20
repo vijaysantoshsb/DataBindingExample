@@ -1,10 +1,10 @@
 package com.example.databindingexample.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.databindingexample.models.UserDetails
 import com.example.databindingexample.roomdatabase.dao.UserDAO
 import com.example.databindingexample.roomdatabase.dao.database.AppDatabase
@@ -39,7 +39,6 @@ class LoginViewmodel : AndroidViewModel {
     fun setLoginDetails() {
         loginDetails.value =
             UserDetails(
-                uid = 1,
                 username = userName.value!!,
                 password = password.value!!,
                 mobile = mobileNumber.value!!
@@ -52,7 +51,12 @@ class LoginViewmodel : AndroidViewModel {
         return loginDetails
     }
 
-    fun getAllUsers(): LiveData<List<UserDetails>>? {
-        return userDAO?.getUsers()
+    fun getAllUsers(username: String): LiveData<List<UserDetails>>? {
+        return userDAO?.getUsers(username)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("LoginViewmodel", "onCleared Called")
     }
 }
