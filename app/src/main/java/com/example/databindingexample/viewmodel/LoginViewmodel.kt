@@ -1,6 +1,7 @@
 package com.example.databindingexample.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -52,5 +53,10 @@ class LoginViewmodel : AndroidViewModel {
 
     fun getAllUsers(username: String): LiveData<List<UserDetails>>? {
         return userDAO?.getUsers(username)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("LoginViewmodel", "onCleared Called")
     }
 }

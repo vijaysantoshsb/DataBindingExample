@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_submit.setOnClickListener {
-            viewmodel?.getAllUsers(edt_username.text.toString())?.observe(this, Observer {
+            viewmodel?.getAllUsers(edt_username.text.toString())?.observe(viewLifecycleOwner, Observer {
                 userList = it
                 if (it.get(0).username.equals(edt_username.text.toString())) {
                     if (it.get(0).password.equals(edt_password.text.toString())) {

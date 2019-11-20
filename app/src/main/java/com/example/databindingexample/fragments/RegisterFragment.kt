@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.room.Room
 import com.example.databindingexample.R
 import com.example.databindingexample.databinding.RegisterFragmentBinding
-import com.example.databindingexample.roomdatabase.dao.database.AppDatabase
 import com.example.databindingexample.viewmodel.LoginViewmodel
-import kotlinx.android.synthetic.main.register_fragment.*
+import kotlinx.android.synthetic.main.register_fragment.btn_submit
+import kotlinx.android.synthetic.main.register_fragment.edt_username
 
 class RegisterFragment : Fragment() {
 
@@ -36,8 +36,26 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_submit.setOnClickListener {
-            viewmodel?.setLoginDetails()
-            Navigation.findNavController(it).navigate(R.id.action_registerFragment_to_loginFragment)
+            insertUser(it)
         }
+    }
+
+    private fun insertUser(view: View) {
+        viewmodel?.getAllUsers(edt_username.text.toString())?.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
+                for (userList in it) {
+                    if (userList.username.equals(edt_username.text.toString())) {
+                        Toast.makeText(requireActivity(), "User found", Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewmodel?.setLoginDetails()
+                        Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment)
+                    }
+                }
+            } else {
+                viewmodel?.setLoginDetails()
+                Navigation.findNavController(btn_submit).navigate(R.id.action_registerFragment_to_loginFragment)
+            }
+        }
+        )
     }
 }
