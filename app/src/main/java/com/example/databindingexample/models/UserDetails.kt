@@ -1,3 +1,13 @@
 package com.example.databindingexample.models
 
-data class UserDetails(var username: String, var password: String, var mobile: String)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class UserDetails(
+    @PrimaryKey val uid: Int,
+    @ColumnInfo(name = "username") var username: String?,
+    @ColumnInfo(name = "password") var password: String?,
+    @ColumnInfo(name = "mobile") var mobile: String?
+)
