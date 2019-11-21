@@ -66,3 +66,7 @@ Napp/src/main/java/com/example/databindingexample/fragments/RegisterFragment.kt
 Lapp/src/main/java/com/example/databindingexample/viewmodel/LoginViewmodel.kt,1\3\139f360c4e177aaba62fdee0c288631edb1f1d6a
 ‰
 Yapp/src/main/java/com/example/databindingexample/roomdatabase/dao/database/AppDatabase.kt,c\d\cde7cb7321f2fcdd64669c1c03dc42abc7cef29e
+‡
+Wapp/schemas/com.example.databindingexample.roomdatabase.dao.database.AppDatabase/2.json,e\0\e0dc0cb817afbb908eaa695cf822ffd4d6a7e3d4
+‡
+Wapp/schemas/com.example.databindingexample.roomdatabase.dao.database.AppDatabase/1.json,5\4\54a932c5e28767a60623a36daccad71bbe979cd5
